@@ -7,7 +7,7 @@ def get_upcoming_birthdays(users):
 
     # визначаємо поточну дату
     today = datetime.today().date()
-
+    
     # визначаємо дату наступного тижня
     next_week = today + timedelta(days=7)
 
@@ -22,6 +22,10 @@ def get_upcoming_birthdays(users):
         user_birthday = datetime.strptime(user["birthday"], "%Y.%m.%d").date()
         congratulation_date = user_birthday.replace(year=today.year)
 
+        # визначаємо дату привітання
+        if congratulation_date < today:
+            congratulation_date = user_birthday.replace(year=today.year + 1)
+
         if congratulation_date >= today and congratulation_date <= next_week:
             if congratulation_date.weekday() <= 4:
                 upcoming_birthdays.append({"name": user["name"], "congratulation_date": congratulation_date.strftime("%Y.%m.%d")})
@@ -35,9 +39,9 @@ def get_upcoming_birthdays(users):
 users = [
     {"name": "John Doe", "birthday": "1985.10.08"},
     {"name": "Jane Smith", "birthday": "1990.10.11"},
-    {"name": "Bob Johnson", "birthday": "1995.05.20"},
-    {"name": "Alice Williams", "birthday": "1988.10.13"},
-    {"name": "Mike Brown", "birthday": "1992.03.15"},
+    {"name": "Bob Johnson", "birthday": "1995.10.13"},
+    {"name": "Alice Williams", "birthday": "1988.02.02"},
+    {"name": "Mike Brown", "birthday": "1992.01.01"},
 ]
 
 # викликаємо функцію   
